@@ -20,6 +20,15 @@ func randArr(max int, size int) []int {
 	return arr[:]
 }
 
+// randOrderedArr an util that help create a rand and ordered array
+// max: 	The max value in the rand array
+// size: 	The array size
+func randOrderedArr(max, size int) []int {
+	arr := randArr(max, size)
+	s.QuickSort(arr)
+	return arr
+}
+
 func TestBubbleSort(t *testing.T) {
 	arr := randArr(100, 20)
 
@@ -112,10 +121,48 @@ func TestCountingSort(t *testing.T) {
 
 func TestBinarySearch(t *testing.T) {
 	searchValue := 30
-	arr := randArr(100, 20)
-	index := s.BinarySearch(arr, 30, false)
+	arr := randOrderedArr(100, 20)
 
+	index := s.BinarySearch(arr, searchValue, false)
+
+	if index != -1 {
+		t.Logf("Search index %d, value %d", index, arr[index])
+	} else {
+		t.Logf("Search value %d not found.", searchValue)
+	}
 	if index != -1 && arr[index] != searchValue {
 		t.Errorf("Unexpected index %d value %d, expect %d", index, arr[index], searchValue)
+	}
+}
+
+func TestBinarySearchGt(t *testing.T) {
+	searchValue := 30
+	arr := randOrderedArr(100, 20)
+
+	index := s.BinarySearchGt(arr, searchValue)
+
+	if index != -1 {
+		t.Logf("Search index %d, value %d", index, arr[index])
+	} else {
+		t.Logf("Search value %d not found.", searchValue)
+	}
+	if index != -1 && arr[index] < searchValue {
+		t.Errorf("Unexpected index %d value %d", index, arr[index])
+	}
+}
+
+func TestBinarySearchLt(t *testing.T) {
+	searchValue := 30
+	arr := randOrderedArr(100, 20)
+
+	index := s.BinarySearchLt(arr, searchValue)
+
+	if index != -1 {
+		t.Logf("Search index %d, value %d", index, arr[index])
+	} else {
+		t.Logf("Search value %d not found.", searchValue)
+	}
+	if index != -1 && arr[index] > searchValue {
+		t.Errorf("Unexpected index %d value %d", index, arr[index])
 	}
 }
