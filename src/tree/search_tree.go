@@ -6,6 +6,16 @@ type SearchTree struct {
 	size int
 }
 
+// Size of binary search tree
+func (st *SearchTree) Size() int {
+	return st.size
+}
+
+// Root of binary search tree
+func (st *SearchTree) Root() *Node {
+	return st.root
+}
+
 // NewSearchTree new and initialize a binary search tree
 func NewSearchTree() *SearchTree {
 	return &SearchTree{}
@@ -32,6 +42,7 @@ func (st *SearchTree) Insert(value int) {
 	newNode := &Node{data: value}
 	if st.root == nil {
 		st.root = newNode
+		st.size = 1
 		return
 	}
 
@@ -41,6 +52,7 @@ func (st *SearchTree) Insert(value int) {
 			// insert if left node is null
 			if node.left == nil {
 				node.left = newNode
+				st.size++
 				break
 			}
 			node = node.left
@@ -48,6 +60,7 @@ func (st *SearchTree) Insert(value int) {
 			// insert if right node is null
 			if node.right == nil {
 				node.right = newNode
+				st.size++
 				break
 			}
 			node = node.right
@@ -58,7 +71,7 @@ func (st *SearchTree) Insert(value int) {
 }
 
 // Delete a value from binary search tree
-func (st *SearchTree) Delete(value int) {
+func (st *SearchTree) Delete(value int) bool {
 	// Find the node
 	node := st.root
 	var parent *Node
@@ -73,7 +86,7 @@ func (st *SearchTree) Delete(value int) {
 		}
 	}
 	if node == nil {
-		return
+		return false
 	}
 
 	// The node has two children
@@ -88,11 +101,6 @@ func (st *SearchTree) Delete(value int) {
 		node, parent = min, minParent // min node to delete
 	}
 
-	// Delete root node
-	if parent == nil {
-		st.root = nil
-	}
-
 	// The node has one or none children
 	var child *Node
 	if node.left != nil {
@@ -102,9 +110,13 @@ func (st *SearchTree) Delete(value int) {
 	}
 
 	// remove the node
-	if parent.left == node {
+	if parent == nil {
+		st.root = nil
+	} else if parent.left == node {
 		parent.left = child
 	} else {
 		parent.right = child
 	}
+	st.size--
+	return true
 }
