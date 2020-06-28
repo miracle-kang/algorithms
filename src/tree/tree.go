@@ -27,7 +27,7 @@ func LayerPrint(root *Node) {
 	for queue.Len() > 0 {
 		element := queue.Front()
 		node = queue.Remove(element).(*Node)
-		print(node.data, ",")
+		print(node.data, " ")
 
 		if node.left != nil {
 			queue.PushBack(node.left)
@@ -36,4 +36,5 @@ func LayerPrint(root *Node) {
 			queue.PushBack(node.right)
 		}
 	}
+	println()
 }

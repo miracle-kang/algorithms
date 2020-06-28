@@ -24,7 +24,7 @@ func TestBinarySearchTree(t *testing.T) {
 	bsTree.Insert(66)
 	bsTree.Insert(55)
 	// insert case
-	// tree.LayerPrint(bsTree.Root())
+	tree.LayerPrint(bsTree.Root())
 	if bsTree.Size() != 15 {
 		t.Error("Unexpected tree size ", bsTree.Size(), ", expect 15")
 	}
@@ -56,4 +56,5 @@ func TestBinarySearchTree(t *testing.T) {
 	if node != nil {
 		t.Error("Unexpected result ", node.Value(), ", expect 18 is deleted")
 	}
+	tree.LayerPrint(bsTree.Root())
 }

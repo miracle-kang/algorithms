@@ -75,14 +75,12 @@ func (st *SearchTree) Delete(value int) bool {
 	// Find the node
 	node := st.root
 	var parent *Node
-	for node != nil {
+	for node != nil && node.data != value {
 		parent = node
 		if value < node.data {
 			node = node.left
 		} else if value > node.data {
 			node = node.right
-		} else {
-			break
 		}
 	}
 	if node == nil {
