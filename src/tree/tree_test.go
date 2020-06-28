@@ -59,6 +59,6 @@ func TestBinarySearchTree(t *testing.T) {
 	}
 	tree.LayerPrint(bsTree.Root())
 
-	sortedArr := bsTree.SortedPrint()
+	sortedArr := bsTree.Sorted()
 	fmt.Println(sortedArr)
 }
