@@ -118,3 +118,23 @@ func (st *SearchTree) Delete(value int) bool {
 	st.size--
 	return true
 }
+
+// Sorted the binary search tree to an array
+func (st *SearchTree) Sorted() []int {
+	arr := make([]int, st.size)
+	index := 0
+	innerTraversal(st.root, arr, &index)
+
+	return arr
+}
+
+func innerTraversal(root *Node, arr []int, index *int) {
+	if root == nil {
+		return
+	}
+
+	innerTraversal(root.left, arr, index)
+	arr[*index] = root.data
+	*index++
+	innerTraversal(root.right, arr, index)
+}

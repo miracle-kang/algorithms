@@ -1,6 +1,7 @@
 package tree_test
 
 import (
+	"fmt"
 	"testing"
 
 	"../tree"
@@ -57,4 +58,7 @@ func TestBinarySearchTree(t *testing.T) {
 		t.Error("Unexpected result ", node.Value(), ", expect 18 is deleted")
 	}
 	tree.LayerPrint(bsTree.Root())
+
+	sortedArr := bsTree.SortedPrint()
+	fmt.Println(sortedArr)
 }
