@@ -8,7 +8,7 @@ import (
 )
 
 func TestBinarySearchTree(t *testing.T) {
-	bsTree := tree.NewSearchTree()
+	bsTree := tree.NewBSTree()
 	bsTree.Insert(33)
 	bsTree.Insert(16)
 	bsTree.Insert(13)
@@ -25,7 +25,7 @@ func TestBinarySearchTree(t *testing.T) {
 	bsTree.Insert(66)
 	bsTree.Insert(55)
 	// insert case
-	tree.LayerPrint(bsTree.Root())
+	fmt.Println(bsTree.Sorted())
 	if bsTree.Size() != 15 {
 		t.Error("Unexpected tree size ", bsTree.Size(), ", expect 15")
 	}
@@ -57,8 +57,7 @@ func TestBinarySearchTree(t *testing.T) {
 	if node != nil {
 		t.Error("Unexpected result ", node.Value(), ", expect 18 is deleted")
 	}
-	tree.LayerPrint(bsTree.Root())
+	fmt.Println(bsTree.Sorted())
 
-	sortedArr := bsTree.Sorted()
-	fmt.Println(sortedArr)
+	tree.LayerPrint(bsTree.Root())
 }

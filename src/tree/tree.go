@@ -1,24 +1,25 @@
 package tree
 
-import "container/list"
+import (
+	"container/list"
+)
 
-// Node is a tree node
-type Node struct {
-	parent *Node
-	left   *Node
-	right  *Node
+// INode interface
+type INode interface {
 
-	data int
-}
+	// Value of the node
+	Value() int
 
-// Value of the node
-func (n *Node) Value() int {
-	return n.data
+	// Left of the node child
+	Left() INode
+
+	// Right of the node child
+	Right() INode
 }
 
 // LayerPrint a tree
 // root: The tree root node
-func LayerPrint(root *Node) {
+func LayerPrint(root INode) {
 	queue := list.New()
 
 	node := root
@@ -26,14 +27,14 @@ func LayerPrint(root *Node) {
 
 	for queue.Len() > 0 {
 		element := queue.Front()
-		node = queue.Remove(element).(*Node)
-		print(node.data, " ")
+		node = queue.Remove(element).(INode)
+		print(node.Value(), " ")
 
-		if node.left != nil {
-			queue.PushBack(node.left)
+		if node.Left() != nil {
+			queue.PushBack(node.Left())
 		}
-		if node.right != nil {
-			queue.PushBack(node.right)
+		if node.Right() != nil {
+			queue.PushBack(node.Right())
 		}
 	}
 	println()

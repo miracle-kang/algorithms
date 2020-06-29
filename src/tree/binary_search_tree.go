@@ -1,30 +1,51 @@
 package tree
 
-// SearchTree a binary search tree implemention
-type SearchTree struct {
-	root *Node
+// BSNode is a binary search tree node
+type BSNode struct {
+	left, right *BSNode
+	data        int
+}
+
+// Value of the node
+func (bsn *BSNode) Value() int {
+	return bsn.data
+}
+
+// Left of the node child
+func (bsn *BSNode) Left() INode {
+	return bsn.left
+}
+
+// Right of the node child
+func (bsn *BSNode) Right() INode {
+	return bsn.right
+}
+
+// BSTree a binary search tree implemention
+type BSTree struct {
+	root *BSNode
 	size int
 }
 
 // Size of binary search tree
-func (st *SearchTree) Size() int {
-	return st.size
+func (bst *BSTree) Size() int {
+	return bst.size
 }
 
 // Root of binary search tree
-func (st *SearchTree) Root() *Node {
-	return st.root
+func (bst *BSTree) Root() *BSNode {
+	return bst.root
 }
 
-// NewSearchTree new and initialize a binary search tree
-func NewSearchTree() *SearchTree {
-	return &SearchTree{}
+// NewBSTree new and initialize a binary search tree
+func NewBSTree() *BSTree {
+	return &BSTree{}
 }
 
 // Find a value from binary search tree
-func (st *SearchTree) Find(value int) *Node {
+func (bst *BSTree) Find(value int) *BSNode {
 
-	node := st.root
+	node := bst.root
 	for node != nil {
 		if value < node.data {
 			node = node.left
@@ -38,21 +59,21 @@ func (st *SearchTree) Find(value int) *Node {
 }
 
 // Insert a value to binary search tree
-func (st *SearchTree) Insert(value int) {
-	newNode := &Node{data: value}
-	if st.root == nil {
-		st.root = newNode
-		st.size = 1
+func (bst *BSTree) Insert(value int) {
+	newNode := &BSNode{data: value}
+	if bst.root == nil {
+		bst.root = newNode
+		bst.size = 1
 		return
 	}
 
-	node := st.root
+	node := bst.root
 	for node != nil {
 		if value < node.data {
 			// insert if left node is null
 			if node.left == nil {
 				node.left = newNode
-				st.size++
+				bst.size++
 				break
 			}
 			node = node.left
@@ -60,7 +81,7 @@ func (st *SearchTree) Insert(value int) {
 			// insert if right node is null
 			if node.right == nil {
 				node.right = newNode
-				st.size++
+				bst.size++
 				break
 			}
 			node = node.right
@@ -71,10 +92,10 @@ func (st *SearchTree) Insert(value int) {
 }
 
 // Delete a value from binary search tree
-func (st *SearchTree) Delete(value int) bool {
+func (bst *BSTree) Delete(value int) bool {
 	// Find the node
-	node := st.root
-	var parent *Node
+	node := bst.root
+	var parent *BSNode
 	for node != nil && node.data != value {
 		parent = node
 		if value < node.data {
@@ -100,7 +121,7 @@ func (st *SearchTree) Delete(value int) bool {
 	}
 
 	// The node has one or none children
-	var child *Node
+	var child *BSNode
 	if node.left != nil {
 		child = node.left
 	} else {
@@ -109,26 +130,26 @@ func (st *SearchTree) Delete(value int) bool {
 
 	// remove the node
 	if parent == nil {
-		st.root = nil
+		bst.root = nil
 	} else if parent.left == node {
 		parent.left = child
 	} else {
 		parent.right = child
 	}
-	st.size--
+	bst.size--
 	return true
 }
 
 // Sorted the binary search tree to an array
-func (st *SearchTree) Sorted() []int {
-	arr := make([]int, st.size)
+func (bst *BSTree) Sorted() []int {
+	arr := make([]int, bst.size)
 	index := 0
-	innerTraversal(st.root, arr, &index)
+	innerTraversal(bst.root, arr, &index)
 
 	return arr
 }
 
-func innerTraversal(root *Node, arr []int, index *int) {
+func innerTraversal(root *BSNode, arr []int, index *int) {
 	if root == nil {
 		return
 	}
