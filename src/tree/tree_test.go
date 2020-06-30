@@ -61,3 +61,28 @@ func TestBinarySearchTree(t *testing.T) {
 
 	tree.LayerPrint(bsTree.Root())
 }
+
+func TestRedBlackTree(t *testing.T) {
+	rbTree := tree.NewRBTree()
+	rbTree.Insert(33)
+	rbTree.Insert(16)
+	rbTree.Insert(13)
+	rbTree.Insert(18)
+	rbTree.Insert(15)
+	rbTree.Insert(17)
+	rbTree.Insert(25)
+	rbTree.Insert(19)
+	rbTree.Insert(27)
+	rbTree.Insert(50)
+	rbTree.Insert(34)
+	rbTree.Insert(58)
+	rbTree.Insert(51)
+	rbTree.Insert(66)
+	rbTree.Insert(55)
+
+	// Insert case
+	fmt.Println(rbTree.Sorted())
+	if rbTree.Size() != 15 {
+		t.Error("Unexpected tree size ", rbTree.Size(), ", expect 15")
+	}
+}

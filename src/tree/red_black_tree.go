@@ -117,6 +117,31 @@ func NewRBTree() *RBTree {
 	return &RBTree{}
 }
 
+// Size of the red-black tree
+func (rbt *RBTree) Size() int {
+	return rbt.size
+}
+
+// Sorted the binary search tree to an array
+func (rbt *RBTree) Sorted() []int {
+	arr := make([]int, rbt.size)
+	index := 0
+	innerTraversalRBTree(rbt.root, arr, &index)
+
+	return arr
+}
+
+func innerTraversalRBTree(root *RBNode, arr []int, index *int) {
+	if root == nil {
+		return
+	}
+
+	innerTraversalRBTree(root.left, arr, index)
+	arr[*index] = root.data
+	*index++
+	innerTraversalRBTree(root.right, arr, index)
+}
+
 // Find a value from red-black tree
 func (rbt *RBTree) Find(value int) *RBNode {
 	node := rbt.root
@@ -157,31 +182,68 @@ func (rbt *RBTree) Insert(value int) {
 	}
 
 	// Repair the tree
-	insertRepairTree(node)
+	insertRepairTree(newNode)
 
 	// Find the new root
-	root := node
+	root := newNode
 	for root.parent != nil {
 		root = root.parent
 	}
 	rbt.root = root
+	rbt.size++
 }
 
 // Repair the tree, return the new root
+// 如果插入节点的父节点是黑色的，那我们什么都不用做，它仍然满足红黑树的定义。
+// 如果插入的节点是根节点，那我们直接改变它的颜色，把它变成黑色就可以了。
+// 其它情况则需要做下面的调整
 func insertRepairTree(node *RBNode) {
-
+	if parent(node) == nil {
+		node.color = BLACK
+	} else if parent(node).color == BLACK {
+		// Nothing to do
+	} else if uncle(node) != nil {
+		if uncle(node).color == RED {
+			insertCase1(node)
+		} else if parent(node).right == node {
+			insertCase2(node)
+		} else if parent(node).left == node {
+			insertCase3(node)
+		}
+	}
 }
 
+// CASE 1：如果关注节点是 a，它的叔叔节点 d 是红色，我们就依次执行下面的操作：
+// 将关注节点 a 的父节点 b、叔叔节点 d 的颜色都设置成黑色；
+// 将关注节点 a 的祖父节点 c 的颜色设置成红色；
+// 关注节点变成 a 的祖父节点 c；
+// 跳到 CASE 2 或者 CASE 3。
 func insertCase1(node *RBNode) {
+	parent(node).color = BLACK
+	uncle(node).color = BLACK
+	grandParent(node).color = RED
 
+	insertRepairTree(grandParent(node))
 }
 
+// CASE 2：如果关注节点是 a，它的叔叔节点 d 是黑色，关注节点 a 是其父节点 b 的右子节点，我们就依次执行下面的操作：
+// 关注节点变成节点 a 的父节点 b；
+// 围绕新的关注节点b 左旋；
+// 跳到 CASE 3。
 func insertCase2(node *RBNode) {
-
+	node = parent(node)
+	rotateLeft(node)
+	insertCase3(node)
 }
 
+// CASE 3：如果关注节点是 a，它的叔叔节点 d 是黑色，关注节点 a 是其父节点 b 的左子节点，我们就依次执行下面的操作：
+// 围绕关注节点 a 的祖父节点 c 右旋；
+// 将关注节点 a 的父节点 b、兄弟节点 c 的颜色互换。
+// 调整结束。
 func insertCase3(node *RBNode) {
-
+	rotateRight(grandParent(node))
+	parent(node).color = BLACK
+	sibling(node).color = RED
 }
 
 // Delete a value from red-black tree

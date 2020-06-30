@@ -144,18 +144,18 @@ func (bst *BSTree) Delete(value int) bool {
 func (bst *BSTree) Sorted() []int {
 	arr := make([]int, bst.size)
 	index := 0
-	innerTraversal(bst.root, arr, &index)
+	innerTraversalBSTree(bst.root, arr, &index)
 
 	return arr
 }
 
-func innerTraversal(root *BSNode, arr []int, index *int) {
+func innerTraversalBSTree(root *BSNode, arr []int, index *int) {
 	if root == nil {
 		return
 	}
 
-	innerTraversal(root.left, arr, index)
+	innerTraversalBSTree(root.left, arr, index)
 	arr[*index] = root.data
 	*index++
-	innerTraversal(root.right, arr, index)
+	innerTraversalBSTree(root.right, arr, index)
 }
