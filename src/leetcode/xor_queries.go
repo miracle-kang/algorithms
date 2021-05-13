@@ -9,7 +9,7 @@ func xorQueries(arr []int, queries [][]int) []int {
 	for i, query := range queries {
 		xor := arr[query[0]]
 		for j := query[0] + 1; j <= query[1]; j++ {
-			xor |= arr[query[j]]
+			xor ^= arr[query[j]]
 		}
 		result[i] = xor
 	}
