@@ -1,7 +1,5 @@
 package leetcode
 
-import "math"
-
 // 1035. 不相交的线
 // 在两条独立的水平线上按给定的顺序写下 nums1 和 nums2 中的整数。
 // 现在，可以绘制一些连接两个数字 nums1[i] 和 nums2[j] 的直线，这些直线需要同时满足满足：
@@ -24,7 +22,7 @@ func maxUncrossedLines(nums1 []int, nums2 []int) int {
 			if nums1[i] == nums2[j] {
 				dp[i+1][j+1] = dp[i][j] + 1
 			} else {
-				dp[i+1][j+1] = int(math.Max(float64(dp[i][j+1]), float64(dp[i+1][j])))
+				dp[i+1][j+1] = max(dp[i][j+1], dp[i+1][j])
 			}
 		}
 	}
