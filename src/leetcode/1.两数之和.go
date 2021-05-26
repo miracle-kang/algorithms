@@ -1,9 +1,11 @@
-package leetcode
+/*
+ * @lc app=leetcode.cn id=1 lang=golang
+ *
+ * [1] 两数之和
+ */
 
-// #1.两数之和
-// 给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出和为目标值的那两个整数，并返回它们的数组下标。
+// @lc code=start
 func twoSum(nums []int, target int) []int {
-	// Dict
 	dict := make(map[int]int)
 	i := 0
 	for i < len(nums) {
@@ -16,6 +18,8 @@ func twoSum(nums []int, target int) []int {
 	}
 	return []int{}
 }
+
+// @lc code=end
 
 func twoSum1(nums []int, target int) []int {
 	// Double while

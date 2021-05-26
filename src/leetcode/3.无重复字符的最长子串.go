@@ -1,7 +1,10 @@
-package leetcode
+/*
+ * @lc app=leetcode.cn id=3 lang=golang
+ *
+ * [3] 无重复字符的最长子串
+ */
 
-// #3. 无重复字符的最长子串
-// 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
+// @lc code=start
 func lengthOfLongestSubstring(s string) int {
 	last := make([]int, 128)
 	for i := 0; i < 128; i++ {
@@ -24,3 +27,6 @@ func maxNum(n1 int, n2 int) int {
 	}
 	return n2
 }
+
+// @lc code=end
+

@@ -1,5 +1,10 @@
-package leetcode
+/*
+ * @lc app=leetcode.cn id=394 lang=golang
+ *
+ * [394] 字符串解码
+ */
 
+// @lc code=start
 import (
 	"strconv"
 	"strings"
@@ -49,3 +54,6 @@ func decodeString(s string) string {
 	}
 	return result
 }
+
+// @lc code=end
+

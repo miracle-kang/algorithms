@@ -1,10 +1,10 @@
-package leetcode
+/*
+ * @lc app=leetcode.cn id=125 lang=golang
+ *
+ * [125] 验证回文串
+ */
 
-import (
-	"strings"
-	"unicode"
-)
-
+// @lc code=start
 func isPalindrome(s string) bool {
 	str := strings.ToLower(s)
 	i := 0
@@ -33,3 +33,6 @@ func isPalindrome(s string) bool {
 func isChar(c byte) bool {
 	return unicode.IsLetter(rune(c)) || unicode.IsDigit(rune(c))
 }
+
+// @lc code=end
+

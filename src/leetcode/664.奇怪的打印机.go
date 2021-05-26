@@ -1,12 +1,10 @@
-package leetcode
+/*
+ * @lc app=leetcode.cn id=664 lang=golang
+ *
+ * [664] 奇怪的打印机
+ */
 
-import "math"
-
-// 664. 奇怪的打印机
-// 有台奇怪的打印机有以下两个特殊要求：
-// 	打印机每次只能打印由 同一个字符 组成的序列。
-// 	每次可以在任意起始和结束位置打印新字符，并且会覆盖掉原来已有的字符。
-// 给你一个字符串 s ，你的任务是计算这个打印机打印它需要的最少打印次数。
+// @lc code=start
 func strangePrinter(s string) int {
 	n := len(s)
 	dp := make([][]int, n)
@@ -29,3 +27,13 @@ func strangePrinter(s string) int {
 	}
 	return dp[0][n-1]
 }
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+// @lc code=end
+

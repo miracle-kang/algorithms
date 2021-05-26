@@ -1,11 +1,16 @@
-package leetcode
+/*
+ * @lc app=leetcode.cn id=13 lang=golang
+ *
+ * [13] 罗马数字转整数
+ */
+
+// @lc code=start
 
 var romanMap = map[string]int{
 	"I": 1, "IV": 4, "V": 5, "IX": 9,
 	"X": 10, "XL": 40, "L": 50, "XC": 90,
 	"C": 100, "CD": 400, "D": 500, "CM": 900, "M": 1000}
 
-// 13. 罗马数字转整数
 func romanToInt(s string) int {
 	preVal := 0
 	res := 0
@@ -21,3 +26,6 @@ func romanToInt(s string) int {
 	}
 	return res
 }
+
+// @lc code=end
+
