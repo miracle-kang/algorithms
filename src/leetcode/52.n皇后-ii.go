@@ -5,46 +5,32 @@
  */
 
 // @lc code=start
-var ans int
-
 func totalNQueens(n int) int {
-	ans = 0
-	nums := make([]int, n)
-	cal(nums, 0)
+	ans := 0
+	cmp := make([]bool, n)
+	lmp, omp := make([]bool, n*2), make([]bool, n*2)
+
+	var cal func(int)
+	cal = func(row int) {
+		if row == n {
+			ans++
+			return
+		}
+		for col := 0; col < n; col++ {
+			if cmp[col] {
+				continue
+			}
+			ll, ol := row+col, n-row+col-1
+			if lmp[ll] || omp[ol] {
+				continue
+			}
+			cmp[col], lmp[ll], omp[ol] = true, true, true
+			cal(row + 1)
+			cmp[col], lmp[ll], omp[ol] = false, false, false
+		}
+	}
+	cal(0)
 	return ans
-}
-
-func cal(nums []int, row int) {
-	n := len(nums)
-	if row == n {
-		ans++
-		return
-	}
-	for col := 0; col < n; col++ {
-		if isOk(nums, row, col) {
-			nums[row] = col
-			cal(nums, row+1)
-		}
-	}
-}
-
-func isOk(nums []int, row, col int) bool {
-	n := len(nums)
-	leftup, rightup := col-1, col+1
-	for i := row - 1; i >= 0; i-- {
-		if nums[i] == col {
-			return false
-		}
-		if leftup >= 0 && nums[i] == leftup {
-			return false
-		}
-		if rightup < n && nums[i] == rightup {
-			return false
-		}
-		leftup--
-		rightup++
-	}
-	return true
 }
 
 // @lc code=end
