@@ -3,7 +3,7 @@ package linked_test
 import (
 	"testing"
 
-	"../linked"
+	"algorithms/src/linked"
 )
 
 func TestLinkedList(t *testing.T) {
@@ -109,4 +109,27 @@ func TestCacheSkipListDelete(t *testing.T) {
 		t.Error("Unexpected size ", list.Size())
 	}
 	list.Print()
+}
+
+func TestLFUCache(t *testing.T) {
+	cache := linked.NewLFUCache(2)
+	cache.Put(1, 1)
+	cache.Put(2, 2)
+	if ret := cache.Get(1); ret != 1 {
+		t.Error("Unexpected result ", ret, ", expect 1")
+	}
+	cache.Put(3, 3)
+	if ret := cache.Get(2); ret != -1 {
+		t.Error("Unexpected result ", ret, ", expect -1")
+	}
+	if ret := cache.Get(3); ret != 3 {
+		t.Error("Unexpected result ", ret, ", expect 3")
+	}
+	cache.Put(4, 4)
+	if ret := cache.Get(1); ret != -1 {
+		t.Error("Unexpected result ", ret, ", expect -1")
+	}
+	if ret := cache.Get(3); ret != 3 {
+		t.Error("Unexpected result ", ret, ", expect 3")
+	}
 }
